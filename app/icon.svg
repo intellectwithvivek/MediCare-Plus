@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="MediCare Plus">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2e8af0" />
+      <stop offset="1" stop-color="#084a9f" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="114" fill="url(#g)" />
+  <path
+    fill="#fff"
+    d="M201 96h110a15 15 0 0 1 15 15v75h75a15 15 0 0 1 15 15v110a15 15 0 0 1-15 15h-75v75a15 15 0 0 1-15 15H201a15 15 0 0 1-15-15v-75h-75a15 15 0 0 1-15-15V201a15 15 0 0 1 15-15h75v-75a15 15 0 0 1 15-15Z"
+  />
+</svg>

@@ -1,0 +1,102 @@
+# MediCare Plus — free Next.js hospital website template
+
+> A production-quality, MIT-licensed website template for a multi-specialty
+> clinic with online appointment booking. Built with Next.js 16 (App Router),
+> React 19 and TypeScript 5. Live demo: https://medicare.vivekkumarsingh.in
+
+## What this site is
+
+MediCare Plus is a DEMO TEMPLATE, not a real medical provider. Every doctor,
+phone number, address, price and statistic on it is fictional, no appointment
+is really booked, and nothing on it is medical advice. It exists so developers
+can clone a complete, accessible clinic website and replace the mock data in
+/data with their own.
+
+## Pages
+
+- /             Homepage: hero with department search, clinic statistics, the
+                eight departments, featured consultants, three charts
+                ("Care in numbers"), patient testimonials, FAQ.
+- /doctors      All consultants, filterable by department via ?department=slug.
+- /doctors/[slug]  One consultant: biography, qualifications timeline,
+                read-only weekly clinic timetable, booking call to action.
+- /departments  The eight specialties, what each treats, and who leads it.
+- /book         The four-step appointment booking flow: (1) department and
+                doctor, (2) date and time slot, (3) patient details,
+                (4) OTP verification, then a confirmation with a booking ID.
+- /built-with   Every page section mapped to the component that renders it.
+
+## Departments
+
+Cardiology, Orthopaedics, Paediatrics, Neurology, Dermatology, ENT,
+Gynaecology, General Medicine.
+
+## Frequently asked questions
+
+Q: Do I need a referral to book?
+A: No. You can book any specialist directly, without a GP referral. A referral
+   letter is still useful if you have one, because it saves the consultant
+   re-taking a history you have already given once.
+
+Q: Which insurance providers are accepted?
+A: Cashless on the Star Health, HDFC ERGO, ICICI Lombard, Niva Bupa, Care
+   Health and CGHS panels. Other insurers are claimed by reimbursement using
+   the itemised invoice issued at reception.
+
+Q: How do I cancel or reschedule?
+A: Through the link in the confirmation SMS or email, up to two hours before
+   the appointment. Cancellation in that window is free; rescheduling is
+   always free, however late.
+
+Q: Is online consultation available?
+A: Yes, for follow-ups, report reviews and repeat prescriptions in every
+   department except Orthopaedics theatre lists. First visits for a new
+   problem need to be in person.
+
+## Stack
+
+Next.js 16.3 (App Router, Turbopack, async request APIs) · React 19 ·
+TypeScript 5 · Node 20.9+ / 22 LTS. No Tailwind, no CSS-in-JS, no UI
+dependency other than the component library below. Server components by
+default; the booking flow, navbar, clock, map and copy button are the only
+client islands.
+
+## Using this template
+
+This site is open source under the MIT licence. Developers can clone it as a
+starting point; clinics and agencies can rebrand it and put it in front of real
+patients. There is no licence fee, no attribution requirement and no paid tier.
+
+  git clone https://github.com/intellectwithvivek/MediCare-Plus.git
+
+Repository: https://github.com/intellectwithvivek/MediCare-Plus
+Author: Vivek Kumar Singh — https://vivekkumarsingh.in/
+
+Replace the mock data in /data and the site details in lib/site.ts, then
+deploy. There is no backend, no database and no authentication to wire up.
+
+## Credit
+
+Built with VivekUI (@the_viveksingh/vivek-ui), a free React component library
+with zero runtime dependencies, by Vivek Kumar Singh.
+
+Install: npm i @the_viveksingh/vivek-ui
+
+- Docs: https://ui.vivekkumarsingh.in/docs
+- npm: https://www.npmjs.com/package/@the_viveksingh/vivek-ui
+- GitHub: https://github.com/intellectwithvivek/vivek_UI
+- Author: https://vivekkumarsingh.in/
+
+## Components used
+
+Alert, AnimatedCounter, Avatar, Badge, Breadcrumb, Button, Card, Checkbox,
+Clock, Code, Combobox, Container, CopyButton, CTA, DatePicker, Divider,
+EmptyState, FAQ, FeatureGrid, Field, Footer, Grid, Heading, Hero, Input,
+MapEmbed, Navbar, OTPInput, Rating, Scheduler, Section, Select, Skeleton,
+Stack, Stats, Stepper, Table, Testimonials, Text, Textarea, ThemeProvider,
+ThemeToggle, Timeline, Toast, plus the BarChart, PieChart and ProgressRing
+charts from @the_viveksingh/vivek-ui/charts.
+
+## Licence
+
+MIT. The footer credit is removable; a star on the repository is appreciated.

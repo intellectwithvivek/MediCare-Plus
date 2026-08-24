@@ -1,7 +1,35 @@
 {
-  "name": "medicareplus",
-  "version": "0.1.0",
-  "private": true,
+  "name": "medicare-plus",
+  "version": "1.0.0",
+  "description": "Free open-source Next.js 16 hospital website template with a four-step online appointment booking flow. Built with VivekUI — zero runtime dependencies.",
+  "license": "MIT",
+  "author": {
+    "name": "Vivek Kumar Singh",
+    "url": "https://vivekkumarsingh.in"
+  },
+  "homepage": "https://medicare.vivekkumarsingh.in",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intellectwithvivek/MediCare-Plus.git"
+  },
+  "keywords": [
+    "nextjs",
+    "nextjs-template",
+    "react",
+    "typescript",
+    "hospital-website-template",
+    "appointment-booking",
+    "clinic-template",
+    "free-template",
+    "open-source",
+    "vivekui",
+    "charts",
+    "healthcare"
+  ],
+  "private": false,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,18 +37,20 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@the_viveksingh/vivek-ui": "^0.5.0",
     "next": "16.3.2",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
-    "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "bugs": {
+    "url": "https://github.com/intellectwithvivek/MediCare-Plus/issues"
   }
 }
