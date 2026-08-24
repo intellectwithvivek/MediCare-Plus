@@ -22,8 +22,8 @@
   --vk-color-ring: #0b62d6;
 
   --page-max: 1180px;
-  --motif-opacity: 0.07;
-  --pulse-opacity: 0.5;
+  --motif-opacity: 0.045;
+  --pulse-opacity: 0.42;
 }
 
 [data-theme='dark'] {
@@ -34,8 +34,8 @@
   --vk-color-primary-subtle-fg: #a6ccff;
   --vk-color-ring: #4d9dff;
 
-  --motif-opacity: 0.1;
-  --pulse-opacity: 0.35;
+  --motif-opacity: 0.075;
+  --pulse-opacity: 0.3;
 }
 
 html {
@@ -102,28 +102,55 @@ main {
 
 /* ------------------------------------------------------------ emergency bar */
 
+/*
+ * Alert supplies the tone, the soft background and the status role. The
+ * geometry is taken over here: its default padding would sit outside the
+ * 1180px container and push the content off the page's vertical rhythm.
+ */
 .emergency-bar {
   border-radius: 0;
   border-inline: 0;
   border-top: 0;
-  padding-block: var(--vk-space-2);
+  padding: 0;
   font-size: var(--vk-text-sm);
 }
 
 .emergency-bar-inner {
   max-width: var(--page-max);
   margin-inline: auto;
-  padding-inline: var(--vk-space-4);
+  padding: var(--vk-space-2) var(--vk-space-4);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--vk-space-2) var(--vk-space-4);
+  gap: var(--vk-space-1) var(--vk-space-4);
+  min-height: 40px;
+}
+
+.emergency-bar-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vk-space-2);
+}
+
+.emergency-bar-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.emergency-bar-note {
+  color: var(--vk-color-muted);
 }
 
 .emergency-bar a {
   color: inherit;
   font-weight: var(--vk-weight-semibold);
   text-underline-offset: 3px;
+}
+
+@media (max-width: 48rem) {
+  .emergency-bar-note {
+    display: none;
+  }
 }
 
 /* -------------------------------------------------------------------- brand */
@@ -208,13 +235,21 @@ main {
   inset: -10%;
   background-color: var(--vk-color-primary);
   opacity: var(--motif-opacity);
-  --cross: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M27 18h10v9h9v10h-9v9H27v-9h-9V27h9z' fill='%23000'/%3E%3C/svg%3E");
-  /* Two mask layers intersected: the cross tile, faded out towards the bottom
-     so the lattice never competes with the headline sitting over it. */
-  -webkit-mask-image: var(--cross), linear-gradient(to bottom, #000 0%, transparent 78%);
-  mask-image: var(--cross), linear-gradient(to bottom, #000 0%, transparent 78%);
-  -webkit-mask-size: 64px 64px, 100% 100%;
-  mask-size: 64px 64px, 100% 100%;
+  --cross: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Cpath d='M22 15h8v7h7v8h-7v7h-8v-7h-7v-8h7z' fill='%23000'/%3E%3C/svg%3E");
+  /*
+   * Two mask layers intersected: the cross tile, and a radial that keeps the
+   * pattern in the top-right quadrant behind the booking card.
+   *
+   * The fade used to run top-to-bottom, which left full-strength crosses
+   * directly behind the h1 — at that density it reads as wallpaper rather than
+   * texture, and it costs the headline contrast. Anchoring the falloff at 88%
+   * 0% clears the column the copy actually occupies.
+   */
+  --fade: radial-gradient(115% 95% at 88% 0%, #000 0%, rgba(0, 0, 0, 0.55) 38%, transparent 72%);
+  -webkit-mask-image: var(--cross), var(--fade);
+  mask-image: var(--cross), var(--fade);
+  -webkit-mask-size: 52px 52px, 100% 100%;
+  mask-size: 52px 52px, 100% 100%;
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
@@ -1008,16 +1043,6 @@ main {
   }
 }
 
-.emergency-bar-inner > :nth-child(2) {
-  display: none;
-}
-
-@media (min-width: 48rem) {
-  .emergency-bar-inner > :nth-child(2) {
-    display: inline;
-    color: var(--vk-color-muted);
-  }
-}
 
 /* FeatureGrid's own icon chip is 3rem and set in `--vk-space-12`; nudge the
    emoji up to a size that fills it rather than floating in the middle. */
@@ -1033,23 +1058,27 @@ main {
  * demo, not part of the clinic's own surface, and it should look identical
  * whichever theme the visitor is in — that constancy is what stops it being
  * read as a hospital announcement.
+ *
+ * Sized to hold one row at the 1180px container. Nothing here wraps: the two
+ * media queries at the end drop content rather than letting it reflow, because
+ * a two-line strip reads as an accident.
  */
 .template-banner {
   background: #0d1117;
   color: #c9d1d9;
   border-bottom: 1px solid #23282f;
-  font-size: var(--vk-text-sm);
+  font-size: 0.8125rem;
 }
 
 .template-banner-inner {
   max-width: var(--page-max);
   margin-inline: auto;
-  padding: var(--vk-space-2) var(--vk-space-4);
+  padding: 6px var(--vk-space-4);
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--vk-space-2) var(--vk-space-5);
+  gap: var(--vk-space-5);
+  min-height: 38px;
 }
 
 .template-banner-copy {
@@ -1060,16 +1089,23 @@ main {
   min-width: 0;
 }
 
+.template-banner-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .template-banner-tag {
   flex: none;
-  padding: 2px 8px;
+  padding: 3px 9px;
   border-radius: var(--vk-radius-full);
   background: #1f6feb;
   color: #fff;
-  font-size: var(--vk-text-xs);
+  font-size: 0.6875rem;
   font-weight: var(--vk-weight-semibold);
   text-transform: uppercase;
-  letter-spacing: var(--vk-tracking-wide);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
 }
 
 .template-banner a {
@@ -1081,78 +1117,86 @@ main {
   display: flex;
   align-items: center;
   gap: var(--vk-space-3);
-  flex-wrap: wrap;
+  flex: none;
 }
 
 .template-banner-clone {
   display: flex;
-  align-items: center;
-  gap: var(--vk-space-1);
-  padding: 2px 2px 2px var(--vk-space-2);
+  align-items: stretch;
   border: 1px solid #30363d;
   border-radius: var(--vk-radius-sm);
   background: #161b22;
-  max-width: 100%;
+  /* hidden, never auto: an inner scrollbar in a 38px strip is the single
+     ugliest thing this bar could render. The media queries below guarantee
+     the command has the room it needs before it is shown at all. */
+  overflow: hidden;
 }
 
-/* The library's Code and Button both read theme tokens; inside this fixed-dark
-   strip they need the strip's palette instead. */
+/* The library's Code and Button read theme tokens; inside this fixed-dark
+   strip they need the strip's own palette instead. */
 .template-banner-clone .vk-code {
+  display: flex;
+  align-items: center;
   background: none;
   border: 0;
-  padding: 0;
+  border-radius: 0;
+  padding: 0 var(--vk-space-3);
   color: #e6edf3;
-  font-size: var(--vk-text-xs);
+  font-size: 0.75rem;
   white-space: nowrap;
-  overflow-x: auto;
-  max-width: min(52vw, 26rem);
 }
 
 .template-banner-clone .vk-copy-button {
-  color: #c9d1d9;
+  display: flex;
+  border-inline-start: 1px solid #30363d;
 }
 
-.template-banner-clone .vk-copy-button:hover {
+.template-banner-clone .vk-copy-button__button {
+  color: #e6edf3;
+  border-radius: 0;
+  padding-inline: var(--vk-space-3);
+  font-size: 0.75rem;
+  font-weight: var(--vk-weight-medium);
+}
+
+.template-banner-clone .vk-copy-button__button:hover {
   background: #21262d;
   color: #fff;
 }
 
 .template-banner-link {
   flex: none;
-  padding: var(--vk-space-1) var(--vk-space-3);
+  padding: 5px var(--vk-space-3);
   border: 1px solid #30363d;
   border-radius: var(--vk-radius-sm);
   background: #161b22;
+  color: #e6edf3;
   text-decoration: none;
   white-space: nowrap;
+  line-height: 1.5;
 }
 
 .template-banner-link:hover {
   background: #21262d;
   border-color: #8b949e;
+  color: #fff;
 }
 
 .template-banner :focus-visible {
   outline: 2px solid #79c0ff;
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
-/* Below the fold of a phone the clone command is unusable — it cannot be
-   selected without horizontal scrolling and the copy button is a 28px target
-   next to a 60vw code block. The GitHub link carries the same information. */
-@media (max-width: 52rem) {
+/* Below this the clone command cannot sit beside the copy without crowding,
+   and the Star link carries the same destination. */
+@media (max-width: 68rem) {
   .template-banner-clone {
     display: none;
   }
-  .template-banner-copy span:last-child {
-    display: none;
-  }
 }
 
-/* The repo badge is the first thing to go when the navbar tightens: the
-   template banner above already carries a GitHub link, so nothing is lost. */
-@container vk-navbar (width < 75rem) {
-  .nav-badge-repo {
+@media (max-width: 34rem) {
+  .template-banner-text {
     display: none;
   }
 }
@@ -1200,4 +1244,159 @@ main {
   text-transform: uppercase;
   letter-spacing: var(--vk-tracking-wide);
   color: var(--vk-color-muted);
+}
+
+/* ------------------------------------------------------- shrink-to-fit fixes */
+
+/*
+ * Grid and flex items default to `min-width: auto`, which means they refuse to
+ * shrink below their min-content width. Any child holding something that does
+ * not wrap — a `git clone` command, a long email, a table — therefore pushes
+ * its whole column wider than the viewport and the page scrolls sideways.
+ *
+ * `min-width: 0` opts each track back into shrinking, at which point the
+ * inner `overflow-x: auto` on the code block and the table wrapper does the
+ * job it was always meant to do.
+ */
+.oss-inner > *,
+.book-layout > *,
+.promo-inner > *,
+.footer-top > *,
+.hero-grid > *,
+.chart-grid > *,
+.profile-header > *,
+.field-row > *,
+.ring-pair > *,
+.card-grid > *,
+.template-banner-inner > * {
+  min-width: 0;
+}
+
+/*
+ * The brand mark is a flex item next to the wordmark, and VivekUI's reset puts
+ * `max-width: 100%` on every svg. Together those let it be shrunk to zero
+ * width on a narrow viewport — the logo simply vanished below about 480px.
+ * A fixed box that never shrinks is the whole requirement.
+ */
+.brand svg {
+  flex: none;
+  width: 30px;
+  height: 30px;
+}
+
+/* --------------------------------------------------------- narrow viewports */
+
+/*
+ * Buttons are `white-space: nowrap` in the library, which is right for a
+ * control but means a long label can only overflow its container. Below the
+ * phone breakpoint a wrapped label is far better than a sideways-scrolling
+ * page.
+ */
+.cta-row .vk-button,
+.doctor-actions .vk-button,
+.oss-actions .vk-button {
+  max-width: 100%;
+}
+
+@media (max-width: 30rem) {
+  .cta-row .vk-button {
+    white-space: normal;
+  }
+}
+
+/*
+ * The four-step Stepper goes vertical on phones.
+ *
+ * The orientation itself is switched by a real prop in booking-flow.tsx —
+ * see the note there. What is left here is only the sizing: a smaller marker
+ * and tighter gap so four vertical steps do not push the form off the screen.
+ *
+ * Descriptions are visually hidden rather than removed, so the control still
+ * reads as "Department, Who you need to see" to a screen reader while the
+ * visible list stays short enough to leave room for the form itself.
+ */
+@media (max-width: 40rem) {
+  .book-stepper {
+    --vk-stepper-marker: 1.75rem;
+    --vk-stepper-gap: var(--vk-space-3);
+  }
+
+  .book-stepper .vk-stepper__description {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* ------------------------------------------------------------ navbar fit */
+
+/*
+ * The brand can be squeezed by the actions beside it. Without these it does
+ * not overflow the *page* — it overflows its own box and prints the wordmark
+ * underneath the theme toggle, which no scrollWidth check ever catches.
+ * Ellipsis makes that structurally impossible whatever the arithmetic.
+ */
+/*
+ * At >=48rem the navbar links carry `flex: auto` and will happily eat the
+ * brand's width, so the brand must not be shrinkable there — letting it
+ * shrink truncated the wordmark to "MediCare Pl..." even at 1440px.
+ * Below that the links collapse into the menu and the brand does need to
+ * give way, so shrinking is re-enabled with ellipsis as the safety net.
+ */
+.brand {
+  flex: none;
+}
+
+.brand-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 48rem) {
+  .brand {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .brand-text {
+    min-width: 0;
+  }
+}
+
+.nav-cta-short {
+  display: none;
+}
+
+@media (max-width: 30rem) {
+  .nav-cta-long {
+    display: none;
+  }
+  .nav-cta-short {
+    display: inline;
+  }
+  .vk-navbar__inner {
+    gap: var(--vk-space-3);
+  }
+  .brand-text {
+    font-size: 0.9375rem;
+  }
+}
+
+/*
+ * Let a long command wrap inside the footer and /built-with boxes instead of
+ * scrolling. `Code` blocks are `white-space: pre` and scroll horizontally,
+ * which is right for source but wrong for a single command a visitor is meant
+ * to read and copy — the tail was simply invisible with no scroll affordance.
+ * The one-line strip at the top of the page keeps its nowrap treatment.
+ */
+.install-row .vk-code__inner {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }

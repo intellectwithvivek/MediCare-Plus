@@ -23,18 +23,24 @@ export function SiteHeader() {
 
   return (
     <header>
-      <Alert
-        tone="info"
-        variant="soft"
-        className="emergency-bar"
-        icon={<span aria-hidden="true">🚑</span>}
-      >
+      {/*
+        `icon={null}` on purpose. Alert is a flex row of [icon][content], so its
+        own glyph would sit against the left edge of a full-bleed bar while the
+        text below it is centred in a 1180px container — the two can never line
+        up. The icon goes inside the container instead, where it belongs.
+      */}
+      <Alert tone="info" variant="soft" className="emergency-bar" icon={null}>
         <div className="emergency-bar-inner">
-          <span>
-            <strong>24 × 7 Emergency:</strong>{' '}
+          <span className="emergency-bar-primary">
+            <span className="emergency-bar-icon" aria-hidden="true">
+              🚑
+            </span>
+            <strong>24 × 7 Emergency</strong>
             <a href={SITE.emergencyPhoneHref}>{SITE.emergencyPhone}</a>
           </span>
-          <span>Walk-in trauma and casualty, no appointment needed.</span>
+          <span className="emergency-bar-note">
+            Walk-in trauma and casualty — no appointment needed.
+          </span>
         </div>
       </Alert>
 
@@ -84,8 +90,14 @@ export function SiteHeader() {
             </Badge>
           </a>
           <ThemeToggle mode="toggle" />
+          {/* Two labels, one shown at a time by CSS. The navbar has to hold the
+              brand, a theme toggle, this CTA and the menu button inside 288px
+              on a small phone, and "Book appointment" alone is 150px of that. */}
           <Button asChild size="sm">
-            <Link href="/book">Book appointment</Link>
+            <Link href="/book">
+              <span className="nav-cta-long">Book appointment</span>
+              <span className="nav-cta-short">Book</span>
+            </Link>
           </Button>
         </Navbar.Actions>
 

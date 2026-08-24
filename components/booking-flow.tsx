@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import {
   Alert,
@@ -56,6 +56,30 @@ const EMPTY_PATIENT: Patient = {
   consent: false,
 };
 
+/**
+ * Tracks a media query without breaking hydration.
+ *
+ * The server snapshot is always `false`, so the server and the first client
+ * render agree; `useSyncExternalStore` then re-renders with the real value
+ * immediately after hydration. Reading `matchMedia` during render instead
+ * would produce markup the server could never have produced.
+ */
+function useMediaQuery(query: string): boolean {
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const mql = window.matchMedia(query);
+      mql.addEventListener('change', onChange);
+      return () => mql.removeEventListener('change', onChange);
+    },
+    [query],
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
+}
+
 /** Midnight today. Everything before it is blocked in the DatePicker. */
 function startOfToday(): Date {
   const now = new Date();
@@ -98,6 +122,15 @@ export function BookingFlow({
   const [loaded, setLoaded] = useState<{ key: string; slots: SlotAvailability[] } | null>(null);
 
   const [today] = useState(startOfToday);
+
+  /*
+   * Four markers alone eat 176px of a 320px screen, so the horizontal stepper
+   * cannot fit its labels on a phone. This is a real prop rather than a CSS
+   * flip of `flex-direction`, because the connector rail between markers is
+   * drawn from `data-orientation` — overriding only the flex axis left every
+   * step with a stray horizontal line pointing at nothing.
+   */
+  const isNarrow = useMediaQuery('(max-width: 40rem)');
 
   const doctor = doctorSlug ? getDoctor(doctorSlug) : undefined;
   const dept = department ? getDepartment(department) : undefined;
@@ -230,6 +263,8 @@ export function BookingFlow({
     <div className="book-layout">
       <div>
         <Stepper
+          className="book-stepper"
+          orientation={isNarrow ? 'vertical' : 'horizontal'}
           steps={STEPS}
           activeStep={step}
           clickable

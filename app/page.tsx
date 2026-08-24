@@ -118,7 +118,7 @@ export default function HomePage() {
       <Section padding="none" background="muted">
         <div className="cta-row" style={{ justifyContent: 'center', paddingBottom: 'var(--vk-space-16)' }}>
           <Button asChild variant="outline" size="lg">
-            <Link href="/departments">See what each department treats</Link>
+            <Link href="/departments">Explore all departments</Link>
           </Button>
         </div>
       </Section>

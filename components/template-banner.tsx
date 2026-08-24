@@ -10,6 +10,10 @@ import { SITE } from '@/lib/site';
  * above the emergency alert keeps that separation unambiguous — a visitor
  * never has to wonder whether the "open source" line is something the hospital
  * is saying.
+ *
+ * Everything is sized to sit on one line at the 1180px container: the strip
+ * looks deliberate at one row and cheap at two, so the copy is short and the
+ * clone chip drops out on narrow viewports rather than being allowed to wrap.
  */
 export function TemplateBanner() {
   return (
@@ -17,12 +21,11 @@ export function TemplateBanner() {
       <div className="template-banner-inner">
         <p className="template-banner-copy">
           <span className="template-banner-tag">Open source</span>
-          <span>
-            A free Next.js hospital template by{' '}
+          <span className="template-banner-text">
+            Free Next.js hospital template by{' '}
             <a href={SITE.authorUrl} target="_blank" rel="noopener noreferrer">
               {SITE.author}
-            </a>{' '}
-            — clone it, rebrand it, ship it.
+            </a>
           </span>
         </p>
 
@@ -44,7 +47,7 @@ export function TemplateBanner() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span aria-hidden="true">★</span> Star on GitHub
+            <span aria-hidden="true">★</span> Star
           </a>
         </div>
       </div>

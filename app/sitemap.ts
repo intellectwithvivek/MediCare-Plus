@@ -9,6 +9,22 @@ import { doctors } from '@/data/doctors';
  */
 const LAST_MODIFIED = new Date('2026-08-24');
 
+/**
+ * Next.js interpolates sitemap values into XML without escaping them
+ * (`build/webpack/loaders/metadata/resolve-route-data.js`), so a URL carrying
+ * `&` — every Unsplash URL in this template — produces a document no XML
+ * parser will accept, and Search Console rejects the file whole.
+ *
+ * Escaping to `&amp;` here would work today but break the moment Next.js
+ * starts escaping properly, giving `&amp;amp;`. Reducing the URL to a single
+ * query parameter removes the ampersand at the source instead, which is
+ * correct under either behaviour.
+ */
+function sitemapSafeImage(url: string): string {
+  const [base] = url.split('?');
+  return `${base}?w=1600`;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE.url, changeFrequency: 'weekly', priority: 1 },
@@ -20,11 +36,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // `images` feeds Google's image sitemap extension, which is the only way a
   // portrait on a profile page gets discovered as an image in its own right.
+  //
+  // These point at images.unsplash.com. Google only indexes cross-domain
+  // images when the hosting domain is also verified in Search Console, so
+  // these entries stay inert until the photos are served from this domain —
+  // which is exactly what happens when you swap the mock data for your own.
   const doctorRoutes: MetadataRoute.Sitemap = doctors.map((d) => ({
     url: `${SITE.url}/doctors/${d.slug}`,
     changeFrequency: 'monthly',
     priority: 0.6,
-    images: [d.photo],
+    images: [sitemapSafeImage(d.photo)],
   }));
 
   return [...staticRoutes, ...doctorRoutes].map((entry) => ({
