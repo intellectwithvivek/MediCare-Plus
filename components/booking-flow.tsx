@@ -534,7 +534,7 @@ export function BookingFlow({
                   <OTPInput
                     length={6}
                     value={otp}
-                    onChange={(value) => {
+                    onValueChange={(value) => {
                       setOtp(value);
                       if (otpError) setOtpError(null);
                     }}

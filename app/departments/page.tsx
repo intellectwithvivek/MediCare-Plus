@@ -101,7 +101,7 @@ export default function DepartmentsPage() {
 
       <CTA
         padding="xl"
-        variant="primary"
+        background="primary"
         title="Not sure which department you need?"
         description="Book General Medicine. They will examine you, order what is needed, and refer you on the same day if it belongs elsewhere."
         actions={
