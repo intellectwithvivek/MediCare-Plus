@@ -201,7 +201,7 @@ export default async function DoctorProfilePage({ params }: PageProps<'/doctors/
 
       <CTA
         padding="xl"
-        variant="muted"
+        background="muted"
         title={`Ready to see ${doctor.name}?`}
         description={`Pick a slot in ${department?.name} — most first appointments are available within three days.`}
         actions={

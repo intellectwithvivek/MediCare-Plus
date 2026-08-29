@@ -51,7 +51,7 @@ export function CareInNumbers() {
             description="Share of all appointments across the six busiest departments."
             data={appointmentsByDepartment}
             donut
-            size={240}
+            diameter={240}
             centerLabel="96%"
             centerSublabel="of all visits"
             showLegend
@@ -75,7 +75,7 @@ export function CareInNumbers() {
           <div className="ring-cell">
             <ProgressRing
               value={satisfactionRate}
-              size={148}
+              diameter={148}
               thickness={12}
               title="Patient satisfaction"
               description="Share of post-visit surveys rating the visit good or excellent."
@@ -91,7 +91,7 @@ export function CareInNumbers() {
           <div className="ring-cell">
             <ProgressRing
               value={onTimeRate}
-              size={148}
+              diameter={148}
               thickness={12}
               title="On-time consultations"
               description="Share of consultations that started within ten minutes of the booked time."

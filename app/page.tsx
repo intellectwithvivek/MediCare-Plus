@@ -174,13 +174,13 @@ export default function HomePage() {
         eyebrow="Before you book"
         title="Questions we get asked every week"
         items={faqs.map((f) => ({ id: f.id, question: f.question, answer: f.answer }))}
-        defaultOpen={0}
+        defaultOpenIndex={0}
       />
 
       {/* --------------------------------------------------------------- cta */}
       <CTA
         padding="xl"
-        variant="primary"
+        background="primary"
         title="Your next appointment is four steps away"
         description="Choose a department, pick a slot that suits you, and you are done. No account, no callback."
         actions={
